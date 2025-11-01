@@ -12,16 +12,18 @@ RSI_PERIOD = 14
 EMA_SHORT = 50
 EMA_LONG = 200
 
+
 def get_klines(symbol="BTCUSDT", interval="3m", limit=200):
 url = f"https://api.bybit.com/v5/market/kline?category=linear&symbol={symbol}&interval={interval}&limit={limit}"
 response = requests.get(url).json()
 return [float(i['close']) for i in response['result']['list'][::-1]]
 
+
 def calculate_rsi(data, period=14):
 gains = []
 losses = []
 for i in range(1, len(data)):
-change = data[i] - data[i-1]
+change = data[i] - data[i - 1]
 gains.append(max(change, 0))
 losses.append(abs(min(change, 0)))
 avg_gain = sum(gains[:period]) / period
@@ -35,12 +37,15 @@ rsi = 100 - (100 / (1 + rs))
 rsi_values.append(rsi)
 return rsi_values[-1]
 
+
 def send_signal(message):
 bot.send_message(chat_id="770009158", text=message)
+
 
 @bot.message_handler(commands=['start'])
 def start(message):
 bot.send_message(message.chat.id, "✅ Бот запущен. Жду сигналов...")
+
 
 def main_loop():
 while True:
@@ -64,6 +69,6 @@ send_signal(trend)
 
 time.sleep(180) # Проверка каждые 3 минуты
 
-# === Запуск ===
+
 if __name__ == "__main__":
-bot.polling(non_stop=True)
+main_loop()
