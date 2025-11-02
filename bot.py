@@ -14,9 +14,9 @@ EMA_LONG = 200
 
 
 def get_klines(symbol="BTCUSDT", interval="3m", limit=200):
-url = f"https://api.bybit.com/v5/market/kline?category=linear&symbol={symbol}&interval={interval}&limit={limit}"
-response = requests.get(url).json()
-return [float(i['close']) for i in response['result']['list'][::-1]]
+  url = f"https://api.bybit.com/v5/market/kline?category=linear&symbol={symbol}&interval={interval}&limit={limit}"
+  response = requests.get(url).json()
+  return [float(i['close']) for i in response['result']['list'][::-1]]
 
 
 def calculate_rsi(data, period=14):
@@ -72,3 +72,4 @@ time.sleep(180) # Проверка каждые 3 минуты
 
 if __name__ == "__main__":
 main_loop()
+
